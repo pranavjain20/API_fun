@@ -1,7 +1,7 @@
 function validateEmail(email) {
 
     var request = new XMLHttpRequest();
-    request.open("GET", {"https://random.dog/13c74c16-afc6-4ca3-bbd8-65a625ceb77b.jpg"}" + email, true);
+    request.open("GET", "https://random.dog/13c74c16-afc6-4ca3-bbd8-65a625ceb77b.jpg"" + email, true);
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200)
         var result = request.responseText;
