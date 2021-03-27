@@ -1,9 +1,7 @@
 function validateEmail(email) {
 
-    $("#valid").text("Loading ...");
-
     var request = new XMLHttpRequest();
-    request.open("GET", "https://emailvalidation.abstractapi.com/v1?api_key=e71d3db019ef44ffa7521676ab0f890d&email=" + email, true);
+    request.open("GET", https://phonevalidation.abstractapi.com/v1?api_key=d228273636174d4e82639e8644086efd&phone" + email, true);
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200)
         var result = request.responseText;
