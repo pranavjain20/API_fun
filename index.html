@@ -8,7 +8,7 @@
     <style> h1{text-align: center;}
     </style>
 	<script>
-		function ValidatePhone(phone) {
+		function validatee(phone) {
 			$("#valid").text("");
 			request = new XMLHttpRequest();
 			request.open("GET", "https://phonevalidation.abstractapi.com/v1?api_key=44e8789a5a9b41f9b6826c41dcd1927e&phone="+phone, true);
@@ -28,7 +28,7 @@
         		if($("#phone").val() == "") {
             		$("#valid").text("");
         		} else {
-           			ValidatePhone($("#phone").val());
+           			validatee($("#phone").val());
         		} }); });
 	</script>
 </head>
