@@ -6,6 +6,7 @@ function validateEmail(email) {
         if (request.readyState == 4 && request.status == 200)
         var result = request.responseText;
         data = JSON.parse(result);
+        document.write(data);
         console.log(data.valid.value);
      
         if (data.valid.value) {
