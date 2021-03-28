@@ -1,80 +1,55 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>JSON Song List</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-	
+	<title>API Fun!</title>
+	<meta charset="utf-8"/>
+	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
+	crossorigin="anonymous"></script>
+    <style> h1{text-align: center;}
+    </style>
+	<script>
+		function ValidatePhone(phone) {
+			$("#valid").text("");
+			request = new XMLHttpRequest();
+			request.open("GET", "https://phonevalidation.abstractapi.com/v1?api_key=44e8789a5a9b41f9b6826c41dcd1927e&phone="+phone, true);
+			request.onreadystatechange = function() {
+				if (request.readyState == 4 && request.status == 200) {
+					req=request.responseText;
+					parser=JSON.parse(req);
+					final=JSON.stringify(parser);
+					document.getElementById("valid").innerHTML=final;
+				}
+			}
+			request.send();
+		}
 
+		$(document).ready(function(){
+    		$(":button").click(function(){
+        		if($("#phone").val() == "") {
+            		$("#valid").text("");
+        		} else {
+           			ValidatePhone($("#phone").val());
+        		} }); });
+	</script>
 </head>
 
 <body>
-	<h1>JSON SONG LIST</h1>
-	<div><h2>Raw Serialized JSON String</h2>
-		<p id="raw_string"></p>
-		<form>
-		</form>
-	</div>
-	<br>
-    <div id="UFData"></div>
-    <br>
-	<div id="filterData" style="margin-bottom: 0px;padding-bottom: 0px"></div>
-    <div id="filterDisplay" style="margin-top: 0px;padding-top: 0px"></div>
+      <div>
+      	<h1> API Fun! </h1>
+         <h2>1) The API I used is one that checks whether or not a phone number is valid. This API is a fast, lightweight, modern, and RESTful JSON API for determining the validity and other details of phone numbers from over 190 countries.
+         	<br>
+         	2) The URL of the website: https://app.abstractapi.com/api/phone-validation/documentation.
+         	<br>
+         	3) The API is accessible with a GET request and returns the data in JSON format.
+         	<br>
+         	4) Applications: mitigate ecommerce fraud by detecting phone numbers associated with malicious behaviour; Validation forms when a user registers their contact information anywhere.
+         	<br>
+         	<br>
+         	Check out the phone validator below!
+            </h2>
 
-	<script language="javascript">
-	$(document).ready(function(){
-		$.get( "https://raw.githubusercontent.com/shreyanshagarwal1/hw9/main/JsonSongList.json", 
-		  	function( data ) {
-		  		//Part 1: Serialized Display
-				jsonData = JSON.parse(data)
-				titles = JSON.stringify(jsonData);
-				$("#raw_string").text(titles);
-				Data = JSON.parse(titles)
-
-			//Part 2: User friendly display
-				friendlyData = "<h2>User Friendly Data:</h2>";
-				Data.forEach(function(titles) {
-					friendlyData += "<p>";
-            		friendlyData += "<strong>" + titles.Title + "</strong><br>";
-            		friendlyData += "Artist(s): " + titles.Artists.join(", ") + "<br>";
-            		friendlyData += "Genre(s): " + titles.Genres.join(", ") + "<br>";
-            		friendlyData += "Year of Release: " + titles["Year of Release"];
-            		friendlyData += "</p>";
-				})
-				$("#UFData").html(friendlyData);
-
-			//Part 3: Filter User friendly Data
-				genreChoice = [];
-				filterText = "<h2> Filtered Data: </h2>";
-        		filterText += "<p> Please pick a genre: <select id='genreSelection'>";
-        		Data.forEach(function(titles) {
-					titles.Genres.forEach(function(Genre){
-                		if (!genreChoice.includes(Genre)) {
-                    		genreChoice.push(Genre);
-                    		filterText += "<option value='" + Genre + "'>" + Genre + "</option>"
-                		}
-            		});
-        		});
-        		filterText  += "</select>&nbsp&nbsp<input type='button' value='Filter Genres'></p>";
-        		$("#filterData").html(filterText);
-
-        		$(":button").click(function(){
-           			pickedGenre = document.getElementById("genreSelection").value;
-            		displayHTML = "<p>Genre Selected: " + pickedGenre + "<p>";
-           			Data.forEach(function(titles) {
-                		if (titles.Genres.includes(pickedGenre)){
-                  			displayHTML += "<p>";
-                    		displayHTML += "<strong>" + titles.Title + "</strong><br>";
-                    		displayHTML += "Artist(s): " + titles.Artists.join(", ") + "<br>";
-                    		displayHTML += "Genre(s): " + titles.Genres.join(", ") + "<br>";
-                    		displayHTML += "Year of Release: " + titles["Year of Release"];
-                    		displayHTML += "</p>";
-                		}
-            		});
-            		$("#filterDisplay").html(displayHTML);
-        		});
-			});
-		});
-</script>
+         <p style="width:80%"> Please write your phone number! <input type="text" id="phone">&nbsp<button>Check to see if your phone is valid!</button></p>
+           <br>
+    <p id="valid"></p>
 </body>
 </html>
